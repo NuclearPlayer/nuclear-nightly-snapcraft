@@ -1,7 +1,6 @@
 name: Update Nuclear snapcraft package
 
-on: 
-  workflow_dispatch:
+on:
   repository_dispatch:
 
 jobs:
@@ -16,8 +15,8 @@ jobs:
         snapcraft_token: ${{ secrets.SNAPCRAFT_TOKEN }}
     - name: Download .snap package
       run: |
-        wget https://github.com/nukeop/nuclear/releases/download/nightly/nuclear-nightly.snap
+        wget https://github.com/nukeop/nuclear/releases/download/${{ github.event.client_payload.tag }}/nuclear-${{ github.event.client_payload.tag }}.snap
     - name: Upload .snap package
       run: |
-        snapcraft upload nuclear-nightly.snap --release stable
+        snapcraft upload nuclear-${{ github.event.client_payload.tag }}.snap --release stable
       
